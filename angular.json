@@ -1,0 +1,139 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "aco": {
+      "root": "apps/aco/",
+      "sourceRoot": "apps/aco/src",
+      "projectType": "application",
+      "prefix": "aco",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/aco",
+            "index": "apps/aco/src/index.html",
+            "main": "apps/aco/src/main.ts",
+            "polyfills": "apps/aco/src/polyfills.ts",
+            "tsConfig": "apps/aco/tsconfig.app.json",
+            "assets": ["apps/aco/src/favicon.ico", "apps/aco/src/assets"],
+            "styles": ["apps/aco/src/styles.scss"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/aco/src/environments/environment.ts",
+                  "with": "apps/aco/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "aco:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "aco:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "aco:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/aco/tsconfig.app.json",
+              "apps/aco/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/aco/jest.config.js",
+            "tsConfig": "apps/aco/tsconfig.spec.json",
+            "setupFile": "apps/aco/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "aco-e2e": {
+      "root": "apps/aco-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/aco-e2e/cypress.json",
+            "tsConfig": "apps/aco-e2e/tsconfig.e2e.json",
+            "devServerTarget": "aco:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "aco:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/aco-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "style": "scss",
+      "framework": "angular"
+    },
+    "@nrwl/schematics:library": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "aco"
+}
